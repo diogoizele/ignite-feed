@@ -1,16 +1,21 @@
-import { Header } from "./components/header";
-import { Post } from "./Post";
-
 import "./global.css";
+import classes from "./app.module.css";
+
+import { Header } from "./components/header";
+import { Sidebar } from "./components/sidebar";
+import { Post } from "./components/post";
 
 function App() {
   return (
     <div>
       <Header />
-      <Post
-        author="Diego Fernandes"
-        content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, temporibus ut aspernatur atque sit non consequatur aliquam"
-      />
+      <div className={classes.wrapper}>
+        <Sidebar />
+        <main>
+          <Post />
+          <Post />
+        </main>
+      </div>
     </div>
   );
 }
