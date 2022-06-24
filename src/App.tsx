@@ -11,30 +11,33 @@ import { Post } from "./components/post";
 import { Login } from "./components/login";
 
 function App() {
-
   return (
-    <GitHubProvider>
+    <>
+      <GitHubProvider>
         <Header />
-      <Login>
-        {(posts) => <div className={classes.wrapper}>
-          <Sidebar />
-          <main>
-            {posts.map(({ author, content, id, publishedAt }) => (
-              <Post
-                key={id}
-                author={author}
-                content={content}
-                publishedAt={publishedAt}
-              />
-            ))}
-          </main>
-          <ToastContainer
-            toastStyle={{ backgroundColor: "#323238", color: "#c4c4cc" }}
-            autoClose={3000}
-          />
-        </div>}
-      </Login>
-    </GitHubProvider>
+        <Login>
+          {(posts) => (
+            <div className={classes.wrapper}>
+              <Sidebar />
+              <main>
+                {posts.map(({ author, content, id, publishedAt }) => (
+                  <Post
+                    key={id}
+                    author={author}
+                    content={content}
+                    publishedAt={publishedAt}
+                  />
+                ))}
+              </main>
+            </div>
+          )}
+        </Login>
+      </GitHubProvider>
+      <ToastContainer
+        toastStyle={{ backgroundColor: "#323238", color: "#c4c4cc" }}
+        autoClose={3000}
+      />
+    </>
   );
 }
 

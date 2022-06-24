@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "../../api/github";
 import { Follower, Post, User } from "../../common/types";
 import { GitHubContext } from "../githubContext/githubContext";
@@ -25,54 +26,54 @@ export function GitHubProvider({ children }: GitHubProviderProps) {
 
   useEffect(() => {
     const loadingData = async () => {
-      const apiUrl = `/users/${userLogin}`;
+      try {
+        const apiUrl = `/users/${userLogin}`;
 
-      const { data } = await api.get<User>(apiUrl);
+        const { data } = await api.get<User>(apiUrl);
 
-      setUser(data);
-      setPosts([
-        {
-          id: 1,
-          author: {
-            avatar: data.avatar_url!,
-            name: data.name ?? data.login,
-            role: "",
-          },
-          content: [
-            { type: "paragraph", text: "Fala galeraa 👋" },
-            {
-              type: "paragraph",
-              text: "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
+        setUser(data);
+        setPosts([
+          {
+            id: 1,
+            author: {
+              avatar: data.avatar_url!,
+              name: data.name ?? data.login,
+              role: "",
             },
-            { type: "link", text: `${data.login}/doctorcare` },
-            { type: "hashtag", text: "#novoprojeto" },
-            { type: "hashtag", text: "#nlw" },
-            { type: "hashtag", text: "#rocketseat" },
-          ],
-          publishedAt: new Date(),
-        },
-      ]);
+            content: [
+              { type: "paragraph", text: "Fala galeraa 👋" },
+              {
+                type: "paragraph",
+                text: "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
+              },
+              { type: "link", text: `${data.login}/doctorcare` },
+              { type: "hashtag", text: "#novoprojeto" },
+              { type: "hashtag", text: "#nlw" },
+              { type: "hashtag", text: "#rocketseat" },
+            ],
+            publishedAt: new Date(),
+          },
+        ]);
 
-      const { data: followers } = await api.get<Follower[]>(
-        `${apiUrl}/followers`
-      );
-
-      console.log(followers);
-
-      const followersArray = [];
-
-      for (let i = 0; i < 3; i++) {
-        const followerIndex = Math.floor(
-          Math.random() * (followers.length - 2) + 1
+        const { data: followers } = await api.get<Follower[]>(
+          `${apiUrl}/followers`
         );
-        console.log(followerIndex);
 
-        followersArray[i] = followers[followerIndex];
+        const followersArray = [];
+
+        for (let i = 0; i < 3; i++) {
+          const followerIndex = Math.floor(
+            Math.random() * (followers.length - 2) + 1
+          );
+          console.log(followerIndex);
+
+          followersArray[i] = followers[followerIndex];
+        }
+
+        setFollowers(followersArray);
+      } catch {
+        toast.error("Usuário não encontrado");
       }
-
-      console.log(followersArray);
-
-      setFollowers(followersArray);
     };
 
     if (userLogin) {
