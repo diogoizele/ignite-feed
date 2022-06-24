@@ -1,0 +1,72 @@
+.loginContainer {
+  background-color: var(--app-background);
+
+  height: calc(100vh - 6rem);
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.loginPapper {
+  height: 33vh;
+
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: var(--papper-background);
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+}
+
+.loginPapper label {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+}
+
+.loginPapper input {
+  width: 100%;
+  height: 3rem;
+  padding: 1rem;
+
+  background: var(--app-background);
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-top: 1rem;
+
+  resize: none;
+  border: 0;
+  border-radius: 8px;
+}
+
+.loginPapper button {
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  border: 0;
+  background: var(--orange-500);
+  color: var(--white);
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: background-color 0.1s;
+
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  left: 1.5rem;
+}
+
+.loginPapper button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loginPapper button:not(:disabled):hover {
+  background: var(--orange-300);
+}
