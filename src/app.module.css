@@ -8,3 +8,16 @@
   gap: 2rem;
   align-items: flex-start;
 }
+<<<<<<< HEAD
+=======
+
+@media (max-width: 768px) {
+  html {
+    font-size: 87.5%;
+  }
+
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+>>>>>>> 858ae7ea0ec3ee4740d05d9d5f6fc5410be35b98
