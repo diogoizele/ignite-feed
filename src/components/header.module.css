@@ -1,13 +1,73 @@
 .header {
-  background-color: var(--gray-600);
+  background-color: var(--header-background);
 
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   padding: 1.25rem 0;
+
+  position: relative;
 }
 
 .header img {
   height: 2.3rem;
+}
+
+.themeToggleContainer {
+  position: absolute;
+  right: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: right 1s, left 1s;
+}
+
+.themeToggleLight {
+  height: 1.6rem;
+  width: 3.2rem;
+  background-color: var(--orange-300);
+
+  border-radius: 1.6rem;
+
+  transition: right 1s, left 1s;
+}
+
+.themeToggleLight::before {
+  content: "";
+  background-color: var(--white);
+  height: 1.2rem;
+  width: 1.2rem;
+
+  border-radius: 1rem;
+
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: right 1s, left 1s;
+}
+
+.themeToggleDark {
+  height: 1.6rem;
+  width: 3.2rem;
+  background-color: var(--orange-300);
+
+  border-radius: 1.6rem;
+  transition: right 1s, left 1s;
+}
+
+.themeToggleDark::before {
+  content: "";
+  background-color: var(--gray-800);
+  height: 1.2rem;
+  width: 1.2rem;
+
+  border-radius: 1rem;
+
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  transition: right 1s, left 1s;
 }
