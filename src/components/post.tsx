@@ -1,6 +1,12 @@
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  InvalidEvent,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 
 import { Avatar } from "./avatar";
@@ -8,6 +14,7 @@ import { Comment } from "./comment";
 import classes from "./post.module.css";
 
 import type { Author, Content } from "../common/types";
+import { useGitHub } from "../context/useGithub";
 
 interface PostProps {
   author: Author;
@@ -16,8 +23,12 @@ interface PostProps {
 }
 
 export function Post({ author, content, publishedAt }: PostProps) {
-  const [comments, setComments] = useState(["Post muito bacana, hein!!!"]);
+  const [comments, setComments] = useState<{ text: string; author: Author }[]>(
+    []
+  );
   const [newCommentText, setNewCommentText] = useState("");
+
+  const { followers, user } = useGitHub();
 
   const publishedDateFormatted = format(
     publishedAt,
@@ -32,14 +43,24 @@ export function Post({ author, content, publishedAt }: PostProps) {
   const handleCreateNewComment = (event: FormEvent) => {
     event.preventDefault();
 
-    setComments((currentComments) => [...currentComments, newCommentText]);
+    setComments((currentComments) => [
+      ...currentComments,
+      {
+        text: newCommentText,
+        author: {
+          avatar: user?.avatar_url!,
+          name: user?.name ?? user?.login!,
+          role: "",
+        },
+      },
+    ]);
     setNewCommentText("");
     toast.success("Novo comentário enviado");
   };
 
   const deleteComment = (comment: string) =>
     setComments((currentComments) =>
-      currentComments.filter((commentText) => commentText !== comment)
+      currentComments.filter((commentText) => commentText.text !== comment)
     );
 
   const handleNewCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -53,14 +74,42 @@ export function Post({ author, content, publishedAt }: PostProps) {
     event.target.setCustomValidity("Esse campo é obrigatório");
   };
 
+  useEffect(() => {
+    const initialComments = followers.map(({ avatar_url, login }, index) => {
+      let comment = "";
+
+      switch (index) {
+        case 0:
+          comment = "Post muito bacana, hein!!!";
+          break;
+        case 1:
+          comment = "Ficou fera demais!!! 🚀🔥";
+          break;
+        default:
+          comment = "Me indica lá no teu trampo? 🤔😂";
+      }
+
+      return {
+        author: {
+          avatar: avatar_url,
+          name: login,
+          role: "",
+        },
+        text: comment,
+      };
+    });
+
+    setComments(initialComments);
+  }, [followers]);
+
   return (
     <article className={classes.post}>
       <header>
         <div className={classes.author}>
-          <Avatar src={author.avatar} />
+          <Avatar src={author?.avatar} />
           <div className={classes.authorInfo}>
-            <strong>{author.name}</strong>
-            <span>{author.role}</span>
+            <strong>{author?.name}</strong>
+            <span>{author?.role}</span>
           </div>
         </div>
         <time
@@ -106,8 +155,13 @@ export function Post({ author, content, publishedAt }: PostProps) {
       </form>
 
       <div className={classes.commentList}>
-        {comments.map((text) => (
-          <Comment key={text} text={text} onDeleteComment={deleteComment} />
+        {comments.map(({ author, text }) => (
+          <Comment
+            author={author}
+            key={text}
+            text={text}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </div>
     </article>
