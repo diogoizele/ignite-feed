@@ -76,7 +76,7 @@
   height: 6rem;
   padding: 1rem;
 
-  background: var(--app-background);
+  background: var(--input-background);
   color: var(--text-primary);
   line-height: 1.4;
   margin-top: 1rem;

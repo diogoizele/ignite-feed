@@ -37,19 +37,29 @@ export function Header() {
         "--sidebar-secondary",
         "#323238"
       );
+      document.documentElement.style.setProperty(
+        "--input-background",
+        "#121214"
+      );
+      document.documentElement.style.setProperty(
+        "--papper-contrast",
+        "#29292e"
+      );
     } else {
       document.documentElement.style.setProperty("--header-background", "#fff");
       document.documentElement.style.setProperty("--text-primary", "#29292e");
       document.documentElement.style.setProperty("--text-secondary", "#323238");
-      document.documentElement.style.setProperty("--app-background", "#e1e1e6");
+      document.documentElement.style.setProperty("--app-background", "#f2721c");
       document.documentElement.style.setProperty(
         "--papper-background",
-        "#c4c4cc"
+        "#e1e1e6"
       );
       document.documentElement.style.setProperty(
         "--sidebar-secondary",
         "#8d8d99"
       );
+      document.documentElement.style.setProperty("--input-background", "#fff");
+      document.documentElement.style.setProperty("--papper-contrast", "#fff");
     }
   }, [themeMode]);
 

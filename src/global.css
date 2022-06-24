@@ -21,6 +21,9 @@
   --papper-background: var(--white);
 
   --sidebar-secondary: var(--gray-600);
+
+  --input-background: var(--white);
+  --papper-contrast: var(--white)
 }
 
 :focus {
