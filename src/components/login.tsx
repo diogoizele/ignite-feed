@@ -30,7 +30,7 @@ export function Login({ children }: LoginProps) {
       <div className={classes.loginContainer}>
         <form onSubmit={handleSubmit} className={classes.loginPapper}>
           <label>Entre com seu usuário do GitHub</label>
-          <input value={userName} onChange={handleInputChange} />
+          <input autoFocus value={userName} onChange={handleInputChange} />
           <button type="submit">Entrar</button>
         </form>
       </div>
