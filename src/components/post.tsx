@@ -1,13 +1,21 @@
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 import { Avatar } from "./avatar";
 import { Comment } from "./comment";
 import classes from "./post.module.css";
 
-export function Post({ author, content, publishedAt }) {
+import type { Author, Content } from "../common/types";
+
+interface PostProps {
+  author: Author;
+  content: Content[];
+  publishedAt: Date;
+}
+
+export function Post({ author, content, publishedAt }: PostProps) {
   const [comments, setComments] = useState(["Post muito bacana, hein!!!"]);
   const [newCommentText, setNewCommentText] = useState("");
 
@@ -21,26 +29,27 @@ export function Post({ author, content, publishedAt }) {
     addSuffix: true,
   });
 
-  const handleCreateNewComment = (event) => {
+  const handleCreateNewComment = (event: FormEvent) => {
     event.preventDefault();
 
-    setComments((comments) => [...comments, newCommentText]);
+    setComments((currentComments) => [...currentComments, newCommentText]);
     setNewCommentText("");
     toast.success("Novo comentário enviado");
   };
 
-  const deleteComment = (comment) =>
-    setComments((comments) =>
-      comments.filter((content) => content !== comment)
+  const deleteComment = (comment: string) =>
+    setComments((currentComments) =>
+      currentComments.filter((commentText) => commentText !== comment)
     );
 
-  const handleNewCommentChange = (event) => {
+  const handleNewCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     event.target.setCustomValidity("");
-
     setNewCommentText(event.target.value);
   };
 
-  const handleFormatInvalidMessage = (event) => {
+  const handleFormatInvalidMessage = (
+    event: InvalidEvent<HTMLTextAreaElement>
+  ) => {
     event.target.setCustomValidity("Esse campo é obrigatório");
   };
 
@@ -62,16 +71,16 @@ export function Post({ author, content, publishedAt }) {
         </time>
       </header>
       <div className={classes.content}>
-        {content.map(({ type, content }) => {
+        {content.map(({ type, text }) => {
           switch (type) {
             case "link":
               return (
-                <p key={content}>
-                  <a href="#">{content}</a>
+                <p key={text}>
+                  <a href="#">{text}</a>
                 </p>
               );
             case "paragraph":
-              return <p key={content}>{content}</p>;
+              return <p key={text}>{text}</p>;
           }
         })}
         <p>
@@ -97,12 +106,8 @@ export function Post({ author, content, publishedAt }) {
       </form>
 
       <div className={classes.commentList}>
-        {comments.map((content) => (
-          <Comment
-            key={content}
-            content={content}
-            onDeleteComment={deleteComment}
-          />
+        {comments.map((text) => (
+          <Comment key={text} text={text} onDeleteComment={deleteComment} />
         ))}
       </div>
     </article>

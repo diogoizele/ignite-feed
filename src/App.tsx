@@ -17,16 +17,15 @@ function App() {
         role: "Web developer",
       },
       content: [
-        { type: "paragraph", content: "Fala galeraa 👋" },
+        { type: "paragraph", text: "Fala galeraa 👋" },
         {
           type: "paragraph",
-          content:
-            "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
+          text: "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
         },
-        { type: "link", content: "diogoizele/doctorcare" },
-        { type: "hashtag", content: "#novoprojeto" },
-        { type: "hashtag", content: "#nlw" },
-        { type: "hashtag", content: "#rocketseat" },
+        { type: "link", text: "diogoizele/doctorcare" },
+        { type: "hashtag", text: "#novoprojeto" },
+        { type: "hashtag", text: "#nlw" },
+        { type: "hashtag", text: "#rocketseat" },
       ],
       publishedAt: new Date("2022-06-24 10:20:00"),
     },
